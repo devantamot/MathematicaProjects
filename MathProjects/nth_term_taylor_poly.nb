@@ -1,0 +1,291 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11162,        283]
+NotebookOptionsPosition[      9787,        254]
+NotebookOutlinePosition[     10135,        269]
+CellTagsIndexPosition[     10092,        266]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Nth Term Calculator for a Taylor Polynomial ", "Title",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellChangeTimes->{{3.750738328295503*^9, 3.750738445175031*^9}, {
+   3.750738488667729*^9, 3.750738507827531*^9}, 3.750738579507858*^9, {
+   3.7507393209498153`*^9, 3.7507393333626165`*^9}, {3.7507393676469545`*^9, 
+   3.7507393719335194`*^9}, 3.750739495687622*^9, {3.750739600896335*^9, 
+   3.750739607252344*^9}, {3.7507398459005365`*^9, 3.750739853876232*^9}, {
+   3.75073989766813*^9, 3.750739922784007*^9}, {3.750739999013173*^9, 
+   3.750740008398081*^9}, {3.750740045244567*^9, 3.7507401086121483`*^9}, {
+   3.75074015104869*^9, 3.7507401553651485`*^9}, {3.7507402736489043`*^9, 
+   3.7507402965038*^9}, {3.75074037669839*^9, 3.7507403841195507`*^9}, {
+   3.7507404594631104`*^9, 3.7507404613460755`*^9}, 3.750740515723692*^9, {
+   3.7507405714516964`*^9, 
+   3.7507406979105964`*^9}},ExpressionUUID->"6cd5a289-5403-4799-b2d2-\
+1b9b985a9195"],
+
+Cell[CellGroupData[{
+
+Cell["By: Devan Tamot", "Chapter",
+ CellChangeTimes->{{3.7507407352757063`*^9, 
+  3.750740740178589*^9}},ExpressionUUID->"3ae493d1-3bc0-474e-9ff4-\
+bb45f022461b"],
+
+Cell[TextData[{
+ "To begin, I create a function nDeriv (below) to take in a ",
+ StyleBox["function",
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ " and a ",
+ StyleBox["number",
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ ". This function will compute the derivate of a function ",
+ StyleBox["n",
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ " times and then will multiply it by it\[CloseCurlyQuote]s corresponding \
+Taylor series term of ",
+ StyleBox["(x^n)/n!",
+  FontSlant->"Italic"],
+ ". \nOnce that function was created, I used the ",
+ StyleBox["Dynamic",
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ " function to allow updates the the output if there is change in the text \
+box provided by ",
+ StyleBox["InputField",
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ ". All that is coated with a ",
+ StyleBox["Manipulate",
+  FontWeight->"Bold",
+  FontVariations->{"Underline"->True}],
+ " that will allow the user to change the term of n. The use can also change \
+the equation by simply typing it in. All functions follow the format ",
+ StyleBox["func[x]",
+  FontSlant->"Italic",
+  FontVariations->{"Underline"->True}],
+ StyleBox[" ",
+  FontSlant->"Italic"],
+ "if it is a computational function. Other wise, it is as you would normally \
+write it. (I.e. x, x^2, x! ...)"
+}], "Text",
+ CellChangeTimes->{{3.750740798723064*^9, 3.750741086430874*^9}, {
+  3.7507411337353716`*^9, 
+  3.7507413118162827`*^9}},ExpressionUUID->"24d8510d-1845-44e8-97ec-\
+41679ce05616"],
+
+Cell[TextData[StyleBox["For precision use of the module, hit the  \
+\[OpenCurlyDoubleQuote]+\[OpenCurlyDoubleQuote] in a box next to the slider. ",
+ FontColor->RGBColor[1, 0, 0]]], "Text",
+ CellChangeTimes->{{3.750740791266997*^9, 3.750740793375388*^9}, {
+  3.7507413166353683`*^9, 
+  3.7507413796189995`*^9}},ExpressionUUID->"41a27d89-f4a3-4214-b43e-\
+b11971685ed8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nDeriv", "[", 
+   RowBox[{"func_", ",", " ", "nth_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"nthder", "=", " ", "func"}], ";", " ", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", " ", 
+      RowBox[{
+       RowBox[{"i", " ", "=", " ", "1"}], ",", " ", 
+       RowBox[{"i", "<", " ", "nth"}], ",", " ", 
+       RowBox[{
+        RowBox[{"i", "++"}], ";", "  ", 
+        RowBox[{"nthder", " ", "=", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{"nthder", ",", "x"}], "]"}]}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"term", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"nthder", "/.", 
+         RowBox[{"x", "\[Rule]", "0"}]}], ")"}], "*", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"x", "^", "nth"}], "/", 
+         RowBox[{"nth", "!"}]}], ")"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+      "This", " ", "is", " ", "a", " ", "graph", " ", "just", " ", "for", " ", 
+       RowBox[{"fun", ".", " ", "Not"}], " ", "much", " ", "use", " ", "in", 
+       " ", "this", " ", "context"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"Plot", "[", 
+       RowBox[{"term", ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{"-", "25"}], ",", "25"}], "}"}], ",", " ", 
+        RowBox[{"PlotLabel", "\[Rule]", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"nthder", "/.", 
+            RowBox[{"x", "\[Rule]", "0"}]}], ")"}], "*", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"x", "^", "nth"}], "/", 
+            RowBox[{"nth", "!"}]}], ")"}]}]}], ",", " ", 
+        RowBox[{"ImageSize", "\[Rule]", "Large"}], ",", " ", 
+        RowBox[{"PlotRange", "\[Rule]", "Full"}]}], "]"}], "*)"}], 
+     "\[IndentingNewLine]", "term"}]}], "\[IndentingNewLine]", 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"DynamicModule", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"f", "=", 
+       RowBox[{"Sin", "[", "x", "]"}]}], "}"}], ",", 
+     RowBox[{"Column", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"InputField", "[", 
+         RowBox[{"Dynamic", "[", "f", "]"}], "]"}], ",", 
+        RowBox[{"Dynamic", "[", 
+         RowBox[{"nDeriv", "[", 
+          RowBox[{"f", ",", "n"}], "]"}], "]"}]}], "}"}], "]"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "1", ",", "\"\<nth Term\>\""}], "}"}], ",", "1", ",", 
+     "50", ",", " ", "1"}], "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.7507384539096584`*^9, 3.750738474679161*^9}, {
+   3.7507386290324554`*^9, 3.750738635563018*^9}, {3.7507398851466093`*^9, 
+   3.7507398855614967`*^9}, 3.7507402455859613`*^9, 3.7507403127823043`*^9, {
+   3.750740604103428*^9, 3.7507406053052125`*^9}, {3.7507410967363124`*^9, 
+   3.750741112848243*^9}},ExpressionUUID->"b5782cda-6680-40cb-bf93-\
+4210ac0e36a5"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`n$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`n$$], 1, "nth Term"}, 1, 50, 1}}, Typeset`size$$ = {
+    264., {15., 21.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`n$556181$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`n$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`n$$, $CellContext`n$556181$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      DynamicModule[{$CellContext`f = Sin[$CellContext`x]}, 
+        Column[{
+          InputField[
+           Dynamic[$CellContext`f]], 
+          Dynamic[
+           $CellContext`nDeriv[$CellContext`f, $CellContext`n$$]]}]], 
+      "Specifications" :> {{{$CellContext`n$$, 1, "nth Term"}, 1, 50, 1}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{315., {62., 68.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.750740706961404*^9},ExpressionUUID->"8f48231b-1ae8-456a-b52d-\
+89ad3a6333a0"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.7507404747991405`*^9, 
+  3.750740712747953*^9},ExpressionUUID->"d1c18cce-0b4e-430b-a354-\
+8eb495bee0a9"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.750740488756811*^9, 
+  3.7507404901421146`*^9}},ExpressionUUID->"ab5722e8-d85e-4d95-800d-\
+f687c26895a5"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.7507398837942247`*^9, 3.750739887255969*^9}, 
+   3.7507402433828444`*^9},ExpressionUUID->"469bbd85-e944-437e-a6e1-\
+0b6f7cc5b065"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.750738681387472*^9, 3.750738694203209*^9}, {
+   3.75073873656096*^9, 3.750738802655249*^9}, {3.7507388743715076`*^9, 
+   3.7507388881516843`*^9}, {3.75073893080762*^9, 3.750738939263014*^9}, {
+   3.7507389725320654`*^9, 3.7507389832444253`*^9}, {3.75073904169116*^9, 
+   3.75073905492478*^9}, {3.7507391974886208`*^9, 3.7507391978416767`*^9}, {
+   3.75073923602459*^9, 3.7507392567272396`*^9}, 
+   3.7507403099129486`*^9},ExpressionUUID->"65e11aad-268a-4cc0-a30e-\
+a15cc2ad5d4d"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.7507403350836515`*^9, 
+  3.7507403366215596`*^9}},ExpressionUUID->"085edd32-e5fc-4a75-b73d-\
+3cd27a21f616"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1600, 817},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"11.2 for Microsoft Windows (64-bit) (September 10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 945, 14, 105, "Title",ExpressionUUID->"6cd5a289-5403-4799-b2d2-1b9b985a9195"],
+Cell[CellGroupData[{
+Cell[1550, 40, 162, 3, 67, "Chapter",ExpressionUUID->"3ae493d1-3bc0-474e-9ff4-bb45f022461b"],
+Cell[1715, 45, 1554, 43, 78, "Text",ExpressionUUID->"24d8510d-1845-44e8-97ec-41679ce05616"],
+Cell[3272, 90, 367, 6, 34, "Text",ExpressionUUID->"41a27d89-f4a3-4214-b43e-b11971685ed8"],
+Cell[CellGroupData[{
+Cell[3664, 100, 3042, 77, 181, "Input",ExpressionUUID->"b5782cda-6680-40cb-bf93-4210ac0e36a5"],
+Cell[6709, 179, 1854, 40, 149, "Output",ExpressionUUID->"8f48231b-1ae8-456a-b52d-89ad3a6333a0"]
+}, Open  ]],
+Cell[8578, 222, 152, 3, 28, InheritFromParent,ExpressionUUID->"d1c18cce-0b4e-430b-a354-8eb495bee0a9"],
+Cell[8733, 227, 154, 3, 28, InheritFromParent,ExpressionUUID->"ab5722e8-d85e-4d95-800d-f687c26895a5"],
+Cell[8890, 232, 179, 3, 28, InheritFromParent,ExpressionUUID->"469bbd85-e944-437e-a6e1-0b6f7cc5b065"],
+Cell[9072, 237, 528, 8, 28, "Input",ExpressionUUID->"65e11aad-268a-4cc0-a30e-a15cc2ad5d4d"],
+Cell[9603, 247, 156, 3, 28, InheritFromParent,ExpressionUUID->"085edd32-e5fc-4a75-b73d-3cd27a21f616"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
